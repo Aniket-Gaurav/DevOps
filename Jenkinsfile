@@ -10,9 +10,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'your-unix-build-command.sh'
+                        sh './your-unix-build-command.sh'
                     } else {
-                        bat 'your-windows-build-command.bat'
+                        bat 'path\\to\\your-windows-build-command.bat'
                     }
                 }
             }
@@ -21,9 +21,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'your-unix-test-command.sh'
+                        sh './your-unix-test-command.sh'
                     } else {
-                        bat 'your-windows-test-command.bat'
+                        bat 'path\\to\\your-windows-test-command.bat'
                     }
                 }
             }
@@ -32,9 +32,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'your-unix-deploy-command.sh'
+                        sh './your-unix-deploy-command.sh'
                     } else {
-                        bat 'your-windows-deploy-command.bat'
+                        bat 'path\\to\\your-windows-deploy-command.bat'
                     }
                 }
             }
