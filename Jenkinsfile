@@ -1,11 +1,13 @@
 pipeline {
     agent any
+
     stages {
         stage('Checkout SCM') {
             steps {
                 checkout scm
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -13,6 +15,7 @@ pipeline {
                 }
             }
         }
+
         stage('Test Docker Image') {
             steps {
                 script {
@@ -22,6 +25,7 @@ pipeline {
                 }
             }
         }
+
         stage('Push Docker Image') {
             steps {
                 script {
@@ -31,17 +35,22 @@ pipeline {
                 }
             }
         }
+
         stage('Push Code to GitHub') {
             steps {
-                sh 'git push origin master'
+                script {
+                    sh 'git push origin master'
+                }
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
             }
         }
     }
+
     post {
         always {
             cleanWs()
