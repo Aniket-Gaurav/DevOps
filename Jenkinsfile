@@ -1,41 +1,30 @@
 pipeline {
     agent any
+
     stages {
-        stage('Checkout SCM') {
-            steps {
-                git 'https://github.com/Aniket-Gaurav/DevOps.git'
-            }
-        }
         stage('Build') {
             steps {
                 script {
-                    if (isUnix()) {
-                        sh './your-unix-build-command.sh'
-                    } else {
-                        bat 'path\\to\\your-windows-build-command.bat'
-                    }
+                    sh 'docker build -t myflaskapp .'
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    if (isUnix()) {
-                        sh './your-unix-test-command.sh'
-                    } else {
-                        bat 'path\\to\\your-windows-test-command.bat'
-                    }
+                    sh 'docker run -d -p 5000:5000 --name myflaskapp myflaskapp'
+                    sh 'sleep 10' // wait for container to be ready
+                    sh 'curl -f http://localhost:5000 || (docker logs myflaskapp && exit 1)'
+                    sh 'docker stop myflaskapp'
+                    sh 'docker rm myflaskapp'
                 }
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    if (isUnix()) {
-                        sh './your-unix-deploy-command.sh'
-                    } else {
-                        bat 'path\\to\\your-windows-deploy-command.bat'
-                    }
+                    // In a real scenario, deploy to a staging/production server
+                    sh 'echo "Deploying..."'
                 }
             }
         }
