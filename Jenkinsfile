@@ -1,25 +1,41 @@
 pipeline {
     agent any
-
     stages {
+        stage('Checkout SCM') {
+            steps {
+                git 'https://github.com/Aniket-Gaurav/DevOps.git'
+            }
+        }
         stage('Build') {
             steps {
                 script {
-                    sh 'echo "Building..."'
+                    if (isUnix()) {
+                        sh 'your-unix-build-command.sh'
+                    } else {
+                        bat 'your-windows-build-command.bat'
+                    }
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    sh 'echo "Testing..."'
+                    if (isUnix()) {
+                        sh 'your-unix-test-command.sh'
+                    } else {
+                        bat 'your-windows-test-command.bat'
+                    }
                 }
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    sh 'echo "Deploying..."'
+                    if (isUnix()) {
+                        sh 'your-unix-deploy-command.sh'
+                    } else {
+                        bat 'your-windows-deploy-command.bat'
+                    }
                 }
             }
         }
